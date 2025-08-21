@@ -1,6 +1,6 @@
 {
-  "name10": "pratica00100",
-  "version10": "1.0.0.0199",
+  "name10": "pratica0010",
+  "version10": "1.0.0.019",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
