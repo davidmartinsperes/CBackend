@@ -3,14 +3,18 @@ const { gerarToken, verificarToken } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-// Endpoint para login
 router.post("/login", (req, res) => {
-  const { email } = req.body;
-  const token = gerarToken(email);
-  return res.status(200).json({ token });
+  const { usuario, senha } = req.body;
+  
+  // Validação simples - em produção deve usar banco de dados
+  if (usuario === "david@gmail.com" && senha === "abcd1234") {
+    const token = gerarToken(usuario);
+    return res.status(200).json({ token });
+  }
+  
+  return res.status(401).json({ msg: "Credenciais inválidas" });
 });
 
-// Endpoint para renovar token
 router.post("/renovar", verificarToken, (req, res) => {
   const { usuario } = req;
   const token = gerarToken(usuario.email);
