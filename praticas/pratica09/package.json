@@ -1,5 +1,5 @@
 {
-  "name": "aula12",
+  "name": "pratica09",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -11,10 +11,10 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
-    "swagger-ui-express": "^5.0.1",
-    "yaml": "^2.8.1"
+    "swagger-ui-express": "^4.6.3",
+    "yaml": "^2.3.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.0.2"
   }
 }
