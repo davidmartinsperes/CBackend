@@ -1,20 +1,14 @@
-const express = require('express');
-const logger = require('morgan');
-
-const produtosRouter = require('./routes/produtos');
-const apidocsRouter = require('./routes/apidocsRouter');
+const express = require("express");
+const path = require("path");
+const logger = require("morgan");
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/produtos', produtosRouter);
-app.use('/api-docs', apidocsRouter);
-
-app.use((req, res) => {
-  res.status(404).json({ msg: 'Not Found' });
-});
+const apidocsRouter = require("./routes/apidocsRouter");
+app.use("/api-docs", apidocsRouter);
 
 module.exports = app;

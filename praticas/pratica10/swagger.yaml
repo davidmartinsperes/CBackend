@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Minha API REST
+  version: 0.1
+
+servers:
+  - url: http://localhost:3000/
+
+tags:
+  - name: usuarios
+
+paths:
+  /usuarios:
+    post:
+      tags:
+        - usuarios
+      summary: Criar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - senha
+              properties:
+                email:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        201:
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        422:
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+
+  /usuarios/login:
+    post:
+      tags:
+        - usuarios
+      summary: Login do usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - usuario
+                - senha
+              properties:
+                usuario:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        401:
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+
+  /usuarios/renovar:
+    post:
+      tags:
+        - usuarios
+      summary: Renovar token
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          description: Token renovado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        401:
+          description: Token inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+
+  /usuarios/{id}:
+    delete:
+      tags:
+        - usuarios
+      summary: Remover usuário
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - JWTAuth: []
+      responses:
+        204:
+          description: Removido
+        401:
+          description: Token inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mensagem'
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        _id:
+          type: string
+        email:
+          type: string
+
+    Mensagem:
+      type: object
+      properties:
+        msg:
+          type: string
+
+  securitySchemes:
+    JWTAuth:
+      type: apiKey
+      name: authorization
+      in: header
